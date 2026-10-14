@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Bordi pastello arcobaleno per Panel e Card. Il colore e' SOLO nel bordo. */
+:root {
+  --pastel-rosa: #f2a7c3;
+  --pastel-pesca: #f6b98d;
+  --pastel-giallo: #ecd067;
+  --pastel-menta: #86d3b0;
+  --pastel-azzurro: #85bfe8;
+  --pastel-lilla: #b9a0e6;
+}
+.dark {
+  --pastel-rosa: #e58aab;
+  --pastel-pesca: #e8a070;
+  --pastel-giallo: #d9bb4a;
+  --pastel-menta: #6cc09b;
+  --pastel-azzurro: #6aa9d6;
+  --pastel-lilla: #a187d6;
+}
+
+@layer components {
+  /* Rotazione automatica in base alla posizione tra i fratelli;
+     data-color="..." (prop color/index) ha la precedenza. */
+  .pastel-box {
+    --pastel-c: var(--pastel-azzurro);
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--pastel-c);
+  }
+  .pastel-box:nth-child(6n + 1) { --pastel-c: var(--pastel-rosa); }
+  .pastel-box:nth-child(6n + 2) { --pastel-c: var(--pastel-pesca); }
+  .pastel-box:nth-child(6n + 3) { --pastel-c: var(--pastel-giallo); }
+  .pastel-box:nth-child(6n + 4) { --pastel-c: var(--pastel-menta); }
+  .pastel-box:nth-child(6n + 5) { --pastel-c: var(--pastel-azzurro); }
+  .pastel-box:nth-child(6n + 6) { --pastel-c: var(--pastel-lilla); }
+  .pastel-box[data-color="rosa"] { --pastel-c: var(--pastel-rosa); }
+  .pastel-box[data-color="pesca"] { --pastel-c: var(--pastel-pesca); }
+  .pastel-box[data-color="giallo"] { --pastel-c: var(--pastel-giallo); }
+  .pastel-box[data-color="menta"] { --pastel-c: var(--pastel-menta); }
+  .pastel-box[data-color="azzurro"] { --pastel-c: var(--pastel-azzurro); }
+  .pastel-box[data-color="lilla"] { --pastel-c: var(--pastel-lilla); }
+}
+
+/* Spazio per la sidebar fissa (desktop) solo quando la nav e' presente (utente loggato). */
+@media (min-width: 1024px) {
+  body:has([data-app-nav]) #app-content {
+    padding-left: 15rem;
+  }
+}
+
+/* Stampa / PDF dei documenti: nasconde navigazione e controlli, lascia solo il foglio. */
+@media print {
+  [data-app-nav],
+  .demo-banner,
+  .no-print {
+    display: none !important;
+  }
+  body:has([data-app-nav]) #app-content {
+    padding-left: 0 !important;
+  }
+  main {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  main > *:not(:has(.documento-a4)):not(.documento-a4) {
+    display: none !important;
+  }
+  .documento-a4 {
+    border: none !important;
+    box-shadow: none !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+}
